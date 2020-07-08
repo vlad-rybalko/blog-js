@@ -12,20 +12,21 @@ export class CreateComponent extends Component {
 
     this.form = new Form(this.$el, {
       title: [Validators.required],
-      fulltext: [Validators.required, Validators.minLenght(10)]
+      fulltext: [Validators.required, Validators.minLength(10)]
     })
   }
 }
 
 function submitHandler(event) {
   event.preventDefault()
+
   if (this.form.isValid()) {
     const formData = {
       type: this.$el.type.value,
       ...this.form.value()
     }
   
-    console.log('Submit:', formData)
+    console.log('Submit', formData)
   } else {
     console.warn('Form is invalid')
   }
