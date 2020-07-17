@@ -3,11 +3,11 @@ const HTMLPlugin = require('html-webpack-plugin')
 module.exports = {
     entry: ['./src/index.js'],
     output: {
-        path: __dirname + '/dist',
+        path: __dirname + '/docs',
         filename: 'bundle.js'
     },
     devServer: {
-        contentBase: __dirname + '/dist'
+        contentBase: __dirname + '/docs'
     },
 
     plugins: [

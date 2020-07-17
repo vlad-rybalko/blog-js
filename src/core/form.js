@@ -1,3 +1,5 @@
+import { Z_STREAM_ERROR } from "zlib";
+
 export class Form {
   constructor(form, controls) {
     this.form = form
@@ -29,13 +31,7 @@ export class Form {
         isValid = validator(this.form[control].value) && isValid
       })
 
-      if (!isValid) {
-        setError(this.form[control])
-      } else {
-        clearError(this.form[control])
-      }
-
-      //isValid ? clearError(this.form[control]) : setError(this.form[control])
+      isValid ? clearError(this.form[control]) : setError(this.form[control])
 
       isFormValid = isFormValid && isValid
     })
