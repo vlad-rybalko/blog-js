@@ -686,7 +686,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"PostsComponent\", function() { return PostsComponent; });\n/* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ \"./src/core/component.js\");\n\n\nclass PostsComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__[\"Component\"] {\n  constructor(id) {\n    super(id)\n  }\n}\n\n\n//# sourceURL=webpack:///./src/components/posts.component.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"PostsComponent\", function() { return PostsComponent; });\n/* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ \"./src/core/component.js\");\n/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/api.service */ \"./src/services/api.service.js\");\n/* harmony import */ var _services_transforn_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/transforn.service */ \"./src/services/transforn.service.js\");\n\n\n\n\nclass PostsComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__[\"Component\"] {\n  constructor(id) {\n    super(id)\n  }\n\n  async  onShow() {\n    const fbData = await _services_api_service__WEBPACK_IMPORTED_MODULE_1__[\"apiService\"].fetchPosts()\n    const posts = _services_transforn_service__WEBPACK_IMPORTED_MODULE_2__[\"TransformService\"].fbObjectToArray(fbData)\n    console.log(posts)\n  }\n}\n\n//# sourceURL=webpack:///./src/components/posts.component.js?");
 
 /***/ }),
 
@@ -698,7 +698,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Component\", function() { return Component; });\nclass Component {\n  constructor(id) {\n    this.$el = document.getElementById(id)\n    this.init()\n  }\n\n  init() {}\n\n  hide() {\n    this.$el.classList.add('hide')\n  }\n\n  show() {\n    this.$el.classList.remove('hide')\n  }\n}\n\n//# sourceURL=webpack:///./src/core/component.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Component\", function() { return Component; });\nclass Component {\n  constructor(id) {\n    this.$el = document.getElementById(id)\n    this.init()\n  }\n\n  init() {}\n\n  onShow() {}\n\n  onHide() {}\n\n  hide() {\n    this.$el.classList.add('hide')\n    this.onHide()\n  }\n\n  show() {\n    this.$el.classList.remove('hide')\n    this.onShow()\n  }\n}\n\n//# sourceURL=webpack:///./src/core/component.js?");
 
 /***/ }),
 
@@ -746,7 +746,19 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _com
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"apiService\", function() { return apiService; });\nclass ApiService {\r\n    constructor(baseUrl) {\r\n        this.url = baseUrl\r\n    }\r\n\r\n    async createPost(post) {\r\n        try {\r\n            const request = new Request(this.url + '/posts.json', {\r\n                method: 'post',\r\n                body: JSON.stringify(post)\r\n            })\r\n            const response = await fetch(request)\r\n            return await response.json()\r\n        } catch (error) {\r\n            console.error(error)\r\n        }\r\n    }\r\n}\r\n\r\nconst apiService = new ApiService('https://js-blo.firebaseio.com')\n\n//# sourceURL=webpack:///./src/services/api.service.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"apiService\", function() { return apiService; });\nclass ApiService {\r\n    constructor(baseUrl) {\r\n        this.url = baseUrl\r\n    }\r\n\r\n    async createPost(post) {\r\n        try {\r\n            const request = new Request(this.url + '/posts.json', {\r\n                method: 'post',\r\n                body: JSON.stringify(post)\r\n            })\r\n            return useRequest(request)\r\n        } catch (error) {\r\n            console.error(error)\r\n        }\r\n    }\r\n\r\n    async fetchPosts() {\r\n        try {\r\n            const request = new Request(`${this.url}/posts.json`, {\r\n                method:'get'\r\n            })\r\n            return useRequest(request)\r\n        } catch (error) {\r\n            console.log(error)\r\n        }\r\n    }\r\n}\r\n\r\nasync function useRequest(request) {\r\n    const response = await fetch(request)\r\n    return await response.json()\r\n}\r\n\r\nconst apiService = new ApiService('https://js-blo.firebaseio.com')\n\n//# sourceURL=webpack:///./src/services/api.service.js?");
+
+/***/ }),
+
+/***/ "./src/services/transforn.service.js":
+/*!*******************************************!*\
+  !*** ./src/services/transforn.service.js ***!
+  \*******************************************/
+/*! exports provided: TransformService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"TransformService\", function() { return TransformService; });\nclass TransformService {\r\n    static fbObjectToArray(fbData) {\r\n        return Object.keys(fbData).map(key => {\r\n            const item = fbData[key]\r\n            item.id = key\r\n            return item\r\n        })\r\n    }\r\n}\n\n//# sourceURL=webpack:///./src/services/transforn.service.js?");
 
 /***/ }),
 
