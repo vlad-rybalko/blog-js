@@ -3,7 +3,7 @@ import {NavigationComponent} from './components/navigation.component'
 import {CreateComponent} from './components/create.component'
 import {FavoriteComponent} from './components/favorite.component'
 import {PostsComponent} from './components/posts.component'
-import {LoaderComponent} from './components/loader.component';
+import {LoaderComponent} from './components/loader.component'
 
 new HeaderComponent('header')
 
