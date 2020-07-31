@@ -3,10 +3,10 @@ import { apiService } from '../services/api.service'
 import { renderPost } from '../templates/post.template'
 
 export class FavoriteComponent extends Component {
-  constructor(id, option) {
+  constructor(id, options) {
     super(id)
 
-    this.loader = option.loader
+    this.loader = options.loader
   }
 
   init() {
@@ -14,7 +14,7 @@ export class FavoriteComponent extends Component {
   }
 
   onShow() {
-    const favorites = JSON.parse(localStorage.getItem('favorites'))
+    const favorites = JSON.parse(localStorage.getItem('favorites')) 
     const html = renderList(favorites)
     this.$el.insertAdjacentHTML('afterbegin', html)
   }
@@ -31,7 +31,7 @@ async function linkClickHandler(event) {
     const postId = event.target.textContent
     this.$el.innerHTML = ''
     this.loader.show()
-    const post = await apiService.fetchPostBuId(postId)
+    const post = await apiService.fetchPostById(postId)
     this.loader.hide()
     this.$el.insertAdjacentHTML('afterbegin', renderPost(post, {withButton: false}))
   }

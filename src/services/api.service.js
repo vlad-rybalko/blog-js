@@ -26,7 +26,7 @@ class ApiService {
     }
   }
 
-  async fetchPostBuId(id) {
+  async fetchPostById(id) {
     try {
       const request = new Request(`${this.url}/posts/${id}.json`, {
         method: 'get'
